@@ -7,19 +7,44 @@ public class GameSceneEntryPoint : MonoBehaviour
     [SerializeField] GameBoard gameBoard;
     
     [SerializeField] CardSpawner cardSpawner;
-    [SerializeField] GridLayout gridLayout;
-    
-    public CardData data;
+    [SerializeField] CustomLayout cardsLayout;
 
+    [SerializeField] LevelGoalPanel levelGoalPanel;
+
+    public CardBundleData cardData;
+
+    [SerializeField] LevelController levelController;
+    
     void Start()
     {
         inputController.Init(Camera.main);
-        inputController.Enable();
+        inputController.Disable();
 
-        cardSpawner.SpawnCard(new CardData());
-        cardSpawner.SpawnCard(new CardData());
-        cardSpawner.SpawnCard(data);
+        cardSpawner.Init(cardsLayout);
 
+        levelGoalPanel.Enable();
+        
+        gameBoard.Updated.AddListener(() =>
+        {
+            inputController.Enable();
+        });
         gameBoard.Enable();
+
+        levelController.Init();
+        
+        levelController.Completed.AddListener(() =>
+        {
+            inputController.Disable();
+        });
+        
+        levelController.SetNewLevel.AddListener((bundleData) =>
+        {
+            inputController.Enable();
+            
+            string goal = bundleData.CardData[bundleData.CorrectItemIndex].Identifier;
+            levelGoalPanel.SetGoal(goal);
+        });
+        
+        levelController.SetNextLevel();
     }
 }

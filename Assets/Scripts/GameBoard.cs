@@ -7,12 +7,18 @@ public class GameBoard : MonoBehaviour
 
     public void Enable()
     {
-        PlayAnimation(new BounceAnimation(transform));
+        PlayAnimation(new BounceAnimation(transform), () =>
+        {
+            Updated?.Invoke();
+        });
     }
 
     public void Disable()
     {
-        PlayAnimation(new BounceHideAnimation(transform));
+        PlayAnimation(new BounceHideAnimation(transform), () =>
+        {
+            Updated?.Invoke();
+        });
     }
 
     private void PlayAnimation(TweenAnimation animation, UnityAction Finished = null)

@@ -1,11 +1,12 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 public class Card : MonoBehaviour, ITouchable
 {
-    [SerializeField] Sprite _cardSprite;
-
+    [SerializeField] SpriteRenderer spriteRenderer;
+    
+    [SerializeField] Transform spriteTransform;
+    
     public UnityEvent Touched;
     public UnityEvent AnimationFinished;
 
@@ -17,14 +18,19 @@ public class Card : MonoBehaviour, ITouchable
         AnimationFinished = new UnityEvent();
 
         _cardData = cardData;
-        _cardSprite = _cardData.Sprite;
+        spriteRenderer.sprite = cardData.Sprite;
     }
 
     public void BehaveCorrect(UnityAction Finished = null)
     {
-        PlayAnimation(new BounceAnimation(transform), Finished);
+        PlayAnimation(new BounceAnimation(spriteTransform), Finished);
     }
 
+    public void BehaveIncorrect(UnityAction Finished = null)
+    {
+        PlayAnimation(new EaseInBounceAnimation(spriteTransform), Finished);
+    }
+    
     private void PlayAnimation(TweenAnimation animation, UnityAction Finished)
     {
         animation.Play(Finished);

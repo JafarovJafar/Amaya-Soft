@@ -30,7 +30,7 @@ public class BounceAnimation : TweenAnimation
         sequence.Append(_transform.DOScale(Vector3.one * _secondStepScale, stepDuration));
         sequence.Append(_transform.DOScale(Vector3.one, stepDuration));
 
-        sequence.AppendCallback(()=>
+        sequence.AppendCallback(() =>
         {
             Finished?.Invoke();
         });
