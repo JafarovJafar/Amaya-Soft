@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class LevelGoalPanel : MonoBehaviour
 {
+    [SerializeField] string prefix;
     [SerializeField] Text text;
 
     public void Enable(UnityAction Finished = null)
@@ -18,6 +19,6 @@ public class LevelGoalPanel : MonoBehaviour
 
     public void SetGoal(string goal)
     {
-        text.text = goal;
+        text.text = prefix + goal;
     }
 }
