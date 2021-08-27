@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93014f1ed3b200e4b89aaeda4fc6863a, type: 3}
+  m_Name: Easy1
+  m_EditorClassIdentifier: 
+  _id: 1
+  _difficulty: 0
+  _cardData:
+  - _identifier: A
+    _sprite: {fileID: 4963718625464178563, guid: 2c9a7232a76035f4a930e425fe02c162,
+      type: 3}
+  - _identifier: B
+    _sprite: {fileID: 7783457984840754399, guid: 2c9a7232a76035f4a930e425fe02c162,
+      type: 3}
+  - _identifier: C
+    _sprite: {fileID: 3234300448368640894, guid: 2c9a7232a76035f4a930e425fe02c162,
+      type: 3}
+  correctItemIndex: 0
