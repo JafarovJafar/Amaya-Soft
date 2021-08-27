@@ -32,7 +32,11 @@ public class CardSpawner : MonoBehaviour
     {
         foreach (Card card in _spawnedCards)
         {
-            Destroy(card);
+            if (card != null)
+            {
+                card.transform.SetParent(null);
+                Destroy(card.gameObject);
+            }
         }
     }
 }

@@ -11,9 +11,8 @@ public class GameSceneEntryPoint : MonoBehaviour
 
     [SerializeField] LevelGoalPanel levelGoalPanel;
 
-    public CardBundleData cardData;
-
     [SerializeField] LevelController levelController;
+    [SerializeField] GameOverPanel gameOverPanel;
     
     void Start()
     {
@@ -35,6 +34,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         levelController.Completed.AddListener(() =>
         {
             inputController.Disable();
+            gameOverPanel.Enable();
         });
         
         levelController.SetNewLevel.AddListener((bundleData) =>
@@ -44,7 +44,12 @@ public class GameSceneEntryPoint : MonoBehaviour
             string goal = bundleData.CardData[bundleData.CorrectItemIndex].Identifier;
             levelGoalPanel.SetGoal(goal);
         });
-        
+
+        levelController.LevelCompleted.AddListener(() =>
+        {
+            levelController.SetNextLevel();
+        });
+
         levelController.SetNextLevel();
     }
 }

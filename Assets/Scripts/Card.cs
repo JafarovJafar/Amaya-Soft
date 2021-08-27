@@ -8,14 +8,14 @@ public class Card : MonoBehaviour, ITouchable
     [SerializeField] Transform spriteTransform;
     
     public UnityEvent Touched;
-    public UnityEvent AnimationFinished;
 
     private CardData _cardData;
 
+    private bool _isAnimating;
+    
     public void Init(CardData cardData)
     {
         Touched = new UnityEvent();
-        AnimationFinished = new UnityEvent();
 
         _cardData = cardData;
         spriteRenderer.sprite = cardData.Sprite;
@@ -33,11 +33,19 @@ public class Card : MonoBehaviour, ITouchable
     
     private void PlayAnimation(TweenAnimation animation, UnityAction Finished)
     {
-        animation.Play(Finished);
+        _isAnimating = true;
+        animation.Play(()=>
+        {
+            _isAnimating = false;
+            Finished?.Invoke();
+        });
     }
 
     public void OnTouch()
     {
-        Touched?.Invoke();
+        if (!_isAnimating)
+        {
+            Touched?.Invoke();
+        }
     }
 }

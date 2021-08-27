@@ -13,6 +13,7 @@ public class LevelController : MonoBehaviour
     private List<string> _completedLevelsIDs = new List<string>();
 
     public UnityEvent Completed = new UnityEvent();
+    public UnityEvent LevelCompleted = new UnityEvent();
     public UnityEventCardBundleData SetNewLevel = new UnityEventCardBundleData();
 
     private int _currentLevel;
@@ -31,9 +32,8 @@ public class LevelController : MonoBehaviour
         if (currentBundleData != null)
         {
             _completedLevelsIDs.Add(currentBundleData.ID);
-            _currentLevel++;
 
-            if (_currentLevel == _levelsCount - 1)
+            if (_currentLevel == _levelsCount)
             {
                 Completed?.Invoke();
 
@@ -41,14 +41,14 @@ public class LevelController : MonoBehaviour
             }
         }
 
-        _currentLevel++;
-
         currentBundleData = _cardBundles.Find(x =>
             x.Difficulty == (CardBundleData.Difficulties) _currentLevel);
 
         SetLevel(currentBundleData);
 
         SetNewLevel?.Invoke(currentBundleData);
+        
+        _currentLevel++;
     }
 
     private void SetLevel(CardBundleData bundle)
@@ -70,7 +70,7 @@ public class LevelController : MonoBehaviour
                     {
                         card.BehaveCorrect(() =>
                         {
-                            Completed?.Invoke();
+                            LevelCompleted?.Invoke();
                         });
                     }
                     else
